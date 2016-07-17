@@ -1,4 +1,4 @@
-import scala.collection._
+import scala.collection.mutable
 import scala.util.Random
 
 object Utils {
@@ -9,14 +9,16 @@ object Utils {
   }
 }
 
-object Main {
-  def main(args: Array[String]): Unit = {
-    val source = Seq.fill(50000000){Random.nextInt()}.toArray
+object Benchmark {
+  def run(count: Int = 500000) = {
+    val source = Seq.fill(count) {
+      Random.nextInt()
+    }.toArray
     val m = mutable.HashMap.empty[Int, Int]
 
     Utils.time("Insertion") {
       for (x <- source) {
-        m.put(x, 0)
+        m.put(x, x)
       }
     }
 
@@ -28,3 +30,10 @@ object Main {
     }
   }
 }
+
+object Main {
+  def main(args: Array[String]): Unit = {
+    Benchmark.run()
+  }
+}
+
